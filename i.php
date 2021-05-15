@@ -20,9 +20,10 @@ class imageExtractor
     ) {
         if (!file_exists($videoFile))
             throw new Exception("File $videoFile does not exist \n");
-        if ($outDir !== __DIR__ && !file_exists($outDir))
-            throw new Exception("Directory $outDir does not exist \n");
+        if ($outDir !== __DIR__ && !file_exists($outDir)) 
+            mkdir($outDir);
 
+        
         $this->videoFile    = $videoFile;
         $this->fps          = $fps;
         $this->outDir       = $outDir;
@@ -33,19 +34,15 @@ class imageExtractor
     public function run()
     {
         $framesLimit = $this->maxFrames ? " -vframes {$this->maxFrames} " : "";
+
         $outDir = $this->outDir;
+
         $command = "ffmpeg -i " . $this->videoFile . " -r " . $this->fps . "/1 $framesLimit  $outDir/out%d.{$this->imageType} 2>&1";
 
-        exec($command, $output, );
-        print_r($output);
+        exec($command, $output );
 
-        // $process = popen($command, 'r');
-        // $file = fread($process, 999999);
-        // $file = explode("\n", $file);
-        // print_r($file);
-        // var_dump($result);
-
+        return $output;
     }
 }
 
-($o = new imageExtractor("./video.mp4", maxFrames: 15))->run();
+// ($o = new imageExtractor("./video.mp4", outDir:"./new_images_2"))->run();
