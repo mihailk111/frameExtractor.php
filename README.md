@@ -3,5 +3,4 @@
 - ffmpeg installed
 
 # Usage 
-- $e = new frameExtractor("file.png", "/images_dir/");
-- $e->run()
+Check main file at the end
