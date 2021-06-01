@@ -28,11 +28,11 @@ class imageExtractor
         if (!file_exists($videoFile))
             throw new Exception(sprintf("File %s does not exist \n", $videoFile));
 
-        $framesLimit = $this->maxFrames ? " -vframes {$this->maxFrames} " : "";
+        $framesLimit = $this->maxFrames ? " -vframes $this->maxFrames " : "";
 
         $outDir = $this->outDir;
 
-        $command = "ffmpeg -i " . $videoFile . " -r " . $this->fps . "/1 $framesLimit  $outDir/out%d.{$this->imageType} 2>&1";
+        $command = "ffmpeg -i " . $videoFile . " -r " . $this->fps . "/1 $framesLimit  $outDir/out%d.$this->imageType 2>&1";
 
         exec($command, $output);
 
